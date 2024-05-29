@@ -9,9 +9,16 @@ dotenv.config({
 });
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const PORT  =  process.env.PORT || 3000;
 const server  = http.createServer(app);
+
+
+const registerUser = require('./routes/registration.routes.js')
+app.use('/api/v1/users', registerUser)
+
 
 
 server.listen(PORT,()=>{
