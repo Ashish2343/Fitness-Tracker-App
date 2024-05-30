@@ -3,6 +3,7 @@ const http = require('http');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const {DB_NAME} =  require('./constants.js')
+const cookieparser = require('cookie-parser');
 
 dotenv.config({
     path: './.env'
@@ -11,13 +12,17 @@ dotenv.config({
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieparser());
 
 const PORT  =  process.env.PORT || 3000;
 const server  = http.createServer(app);
 
 
 const registerUser = require('./routes/registration.routes.js')
+const profile = require('./routes/home.routes.js');
+
 app.use('/api/v1/users', registerUser)
+app.use('/api/v1/users', profile)
 
 
 
